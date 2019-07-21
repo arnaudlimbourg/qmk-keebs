@@ -1,8 +1,9 @@
-# Ivan's Ergodox Config
+# Arnaud's Ergodox Config
 
 
 ## Details about the layout
 
+--- Ivan's configuration
 - Shift and Cmd are One Shot Modifiers, so tapping them once will apply them to the next key. When tapped twice they will lock, until tapped again to clear.
 - When switching to other layers, any stuck modifiers are cleared in order to avoid unintended key combos
 - There are a few leader key combinations. Right now, `KC_LEAD` + `s` will open my wiki homepage.
@@ -20,10 +21,6 @@ brew install avr-gcc
 brew install dfu-programmer
 brew install gcc-arm-none-eabi
 brew install avrdude
-
-git clone https://github.com/qmk/qmk_firmware.git
-git clone https://github.com/issmirnov/ergodox-layout.git \
-            layouts/community/ergodox/ismirnov
 ```
 
 ### Teensy utils
@@ -36,11 +33,11 @@ Download and add both of these to $PATH
 ## Flashing
 
 ```
-make ergodox_ez:ismirnov
-teensy_loader_cli -mmcu=atmega32u4 -w -v ergodox_ez_ismirnov.hex
+make ergodox_ez:arnaudlimbourg
+teensy_loader_cli -mmcu=atmega32u4 -w -v ergodox_ez_arnaudlimbourg.hex
 
 # or just
-make ergodox_ez:ismirnov:teensy
+make ergodox_ez:arnaudlimbourg:teensy
 ```
 
 ## Gotchas

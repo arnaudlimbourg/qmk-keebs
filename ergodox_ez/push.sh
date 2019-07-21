@@ -1,2 +1,2 @@
 #!/bin/bash
-make ergodox_ez:issmirnov:teensy
+make ergodox_ez:arnaudlimbourg:teensy

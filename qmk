@@ -10,7 +10,7 @@ import time
 
 import visualizer
 
-user = "issmirnov"
+user = "arnaudlimbourg"
 
 # override for non-standard keyboard locations. For example, keebio
 # boards have one extra layer in the source tree.

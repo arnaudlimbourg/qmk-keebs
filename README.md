@@ -1,6 +1,6 @@
-# Ivan's QMK Keyboard Layouts
+# Arnaud's QMK Keyboard Layouts
 
-Forked from https://github.com/thenyeguy/qmk - thank you to @thenyeguy for the structure and template setup.
+Forked from https://github.com/issmirnov/qmk - thank you to @issmirnov & @thenyeguy for the structure and template setup.
 
 Supported Keyboards:
 
@@ -18,12 +18,6 @@ Supported Keyboards:
   - `show` - displays layout in visualizer
 
 ## TODO
-
-- 
-
-### levinson
-
-- 
 
 ### ergodox
 
