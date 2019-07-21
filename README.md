@@ -5,7 +5,6 @@ Forked from https://github.com/issmirnov/qmk - thank you to @issmirnov & @thenye
 Supported Keyboards:
 
 - Ergodox EZ
-- Levinson
 - Planck
 
 ## Commands
