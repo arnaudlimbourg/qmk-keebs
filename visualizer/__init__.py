@@ -6,6 +6,7 @@ import re
 _KEYNAMES = {
     "_______": "",
     "XXXXXXX": "",
+    "KC_TRNS": "",
 
     "KC_COMM": ",",
     "KC_DOT": ".",
@@ -64,8 +65,6 @@ _KEYNAMES = {
     "OSMSFT": "⇧(1)",
     "MODSFT": "⌘⇧",
     "APPS": "⌘ + d",
-    # "KC_LALT": "Alt",
-    # "KC_LGUI": "Mod",
     "KC_LSFT": "Shift",
     "KC_RSFT": "Shift",
     "KC_LCTL": "Ctrl",
@@ -84,6 +83,29 @@ _KEYNAMES = {
 
     "AG_NORM": "Linux",
     "AG_SWAP": "Mac",
+
+    "FR_MINS": "-",
+    "FR_AMP": "&",
+    "FR_QUOT": "\"",
+    "FR_APOS": "'",
+    "FR_LPRN": "(",
+    "FR_RPRN": ")",
+    "FR_SECT": "§",
+    "FR_EXLM": "!",
+    "FR_EACU": "é",
+    "FR_EGRV": "è",
+    "FR_AGRV": "à",
+    "FR_CCED": "ç",
+    "FR_LESS": "@",
+    "FR_COLN": ":",
+    "FR_COMM": ",",
+    "FR_UGRV": "ù",
+    "FR_EQL": "=",
+    "LT(_SYMB,FR_UGRV)": "ù",
+    "LCTL(LSFT(KC_TAB))": "",
+    "LCTL(KC_TAB)": "",
+    "MEH_T(KC_DELT)": "",
+
 }
 
 
@@ -126,27 +148,24 @@ class _Layer(object):
         self.name = name
         self.codes = codes
 
+    def __repr__(self):
+        return f"{self.name} with {self.codes}"
+
     def key_name(self, idx):
         code = self.codes[idx]
         if code in _KEYNAMES:
             return _KEYNAMES[code]
-        return code.replace("KC_", "").title().replace("_", "")
+        return code.replace("KC_", "").replace("FR_", "").title().replace("_", "")
 
 
-# parses list of row_lines for "#define _____XXX___ KC_1, KC_2, KC_3" style statements
-def _load_rows(row_lines):
-    row_re = re.compile(r"^#define\s*(\w*)\s*(.*)$")
+def _split_codes_from_line(line):
+    """Will try to output a list of codes as best as it can
 
-    rows = {}
-    for line in row_lines:
-        if line.startswith('#define ________'):
-            match = row_re.match(line)
-            rows[match.group(1)] = [e.strip() for e in match.group(2).split(",")]
-    return rows
+    takes a whole line from the keymap.c and 'parses it' """
+    output = line.split(" ")  # safe-ish to split on this
+    return filter(None, [c.replace(",", "").strip() for c in output])
 
-# keymap_lines is the raw c source file
-# rows is a dict of macro to keycode list.
-def _load_layers(keymap_lines, rows):
+def _load_layers(keymap_lines):
     start_re = re.compile(r"^\[_(\w+)\] =")
     end_re = re.compile(r"^\),")
 
@@ -161,14 +180,7 @@ def _load_layers(keymap_lines, rows):
                 layer_name = None
                 codes = None
             else:
-                for code in filter(None,(code.strip() for code in line.split(",") )):
-                    c = code if code not in rows else rows[code] # performa macro expansion from lookup table
-                    if type(c) is list:
-                        codes.extend(c)
-                    else:
-                        codes.append(c)
-
-
+                codes += _split_codes_from_line(line)
         elif start:
             layer_name = start.group(1)
             codes = []
@@ -176,13 +188,8 @@ def _load_layers(keymap_lines, rows):
 
 
 def visualize(user_dir, keyboard_dir):
-    rows_path = os.path.join(user_dir, "rows.h")
-    rows = {}
-    if os.path.isfile(rows_path):
-        with open(os.path.join(user_dir, "rows.h")) as f:
-            rows = _load_rows(f)
     with open(os.path.join(keyboard_dir, "keymap.c")) as f:
-        layers = _load_layers(f,rows)
+        layers = _load_layers(f)
     with open(os.path.join(keyboard_dir, "template.txt")) as f:
         template = _Template(f.read())
     for layer in layers:
