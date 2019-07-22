@@ -134,7 +134,6 @@ uint32_t layer_state_set_user(uint32_t state) {
   ergodox_right_led_2_off();
   ergodox_right_led_3_off();
 
-  combo_enable(); // by default, enable combos.
   switch (layer) {
     case 0:
       break;
