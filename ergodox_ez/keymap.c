@@ -98,32 +98,53 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     return MACRO_NONE;
 };
 
-// Runs constantly in the background, in a loop.
+
+// Runs constantly in the background, in a loop every 100ms or so.
+// Best used for LED status output triggered when user isn't actively typing.
 void matrix_scan_user(void) {
+  uint8_t layer = biton32(layer_state);
+  if (layer == 0) {
+    // Set up LED indicators for stuck modifier keys.
+    // https://github.com/qmk/qmk_firmware/blob/master/tmk_core/common/report.h#L118
+    switch (keyboard_report->mods) {
+      case MOD_BIT(KC_LSFT): // LSHIFT
+      case MOD_BIT(KC_RSFT): // RSHIFT
+        ergodox_right_led_1_set (LED_BRIGHTNESS_LO);
+        ergodox_right_led_1_on ();
+        ergodox_right_led_2_set (LED_BRIGHTNESS_LO);
+        ergodox_right_led_2_on ();
+        ergodox_right_led_3_set (LED_BRIGHTNESS_HI);
+        ergodox_right_led_3_off ();
+        break;
 
-    uint8_t layer = biton32(layer_state);
+      case MOD_BIT(KC_LGUI): // LGUI
+        ergodox_right_led_1_set (LED_BRIGHTNESS_HI);
+        ergodox_right_led_1_off ();
+        ergodox_right_led_2_set (LED_BRIGHTNESS_LO);
+        ergodox_right_led_2_on ();
+        ergodox_right_led_3_set (LED_BRIGHTNESS_LO);
+        ergodox_right_led_3_on ();
+        break;
 
-    ergodox_board_led_off();
-    ergodox_right_led_1_off();
-    ergodox_right_led_2_off();
-    ergodox_right_led_3_off();
-    switch (layer) {
-      // TODO: Make this relevant to the ErgoDox EZ.
-        case 1:
-            ergodox_right_led_1_on();
-            break;
-        case 2:
-            ergodox_right_led_2_on();
-            break;
-        case 3:
-            ergodox_right_led_3_on();
-            break;
-        default:
-            // none
-            break;
+      case MOD_BIT(KC_LSFT) ^ MOD_BIT(KC_LGUI):
+        ergodox_right_led_1_set (70);
+        ergodox_right_led_1_on ();
+        ergodox_right_led_2_set (70);
+        ergodox_right_led_2_on ();
+        ergodox_right_led_3_set (70);
+        ergodox_right_led_3_on ();
+        break;
+
+      default: // reset leds
+        ergodox_right_led_1_set (LED_BRIGHTNESS_HI);
+        ergodox_right_led_1_off ();
+        ergodox_right_led_2_set (LED_BRIGHTNESS_HI);
+        ergodox_right_led_2_off ();
+        ergodox_right_led_3_set (LED_BRIGHTNESS_HI);
+        ergodox_right_led_3_off ();
     }
-
-};
+  }
+}
 
 // only runs when when the layer is changed, good for updating LED's and clearing sticky state
 uint32_t layer_state_set_user(uint32_t state) {
