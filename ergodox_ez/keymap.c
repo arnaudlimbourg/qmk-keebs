@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS,  KC_KP_SLASH,    FR_7,      FR_8,    FR_9,      FR_ASTR,     KC_F12,
               FR_MINS,        FR_4,      FR_5,    FR_6,      FR_PLUS,     FR_EQL,
     KC_TRNS,  FR_0,           FR_1,      FR_2,    FR_3,      KC_KP_SLASH, KC_TAB,
-                              KC_TRNS,   KC_TRNS, KC_KP_DOT, KC_EQL,      TO(BASE),
+                              KC_TRNS,   KC_TRNS, KC_KP_DOT, KC_EQL,      TO(_BASE),
     RGB_TOG,  RGB_SLD, RGB_MOD, RGB_SLD, RGB_VAD, RGB_VAI
 ),
 
