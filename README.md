@@ -20,4 +20,5 @@ Supported Keyboards:
 
 ### ergodox
 
-- 
+- [ ] light underside rgb lights when changing layer
+- [ ] review positioning of the alt and control keys
