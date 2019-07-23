@@ -32,7 +32,6 @@ class QmkBuilder(object):
         self.qmk_config_dir = os.path.join(self.qmk_root, "keyboards",
                                            keyboard_target, "keymaps", user)
 
-        self.local_user_dir = abs_path("user")
         self.qmk_user_dir = os.path.join(self.qmk_root, "users", user)
 
     def _cleanup(self):
@@ -44,7 +43,6 @@ class QmkBuilder(object):
     def __enter__(self):
         self._cleanup()
         shutil.copytree(self.local_config_dir, self.qmk_config_dir)
-        shutil.copytree(self.local_user_dir, self.qmk_user_dir)
         return self
 
     def execute(self, script):
