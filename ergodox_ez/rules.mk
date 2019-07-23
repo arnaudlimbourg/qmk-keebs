@@ -5,7 +5,7 @@
 LINK_TIME_OPTIMIZATION_ENABLE = yes
 
 # Enable debugging only when needed.
-CONSOLE_ENABLE = yes # +400 bytes (hid_listen support)
+CONSOLE_ENABLE = no # +400 bytes (hid_listen support)
 
 # Enable combo keys for vim usage.
 # https://github.com/qmk/qmk_firmware/blob/master/docs/feature_combo.md
