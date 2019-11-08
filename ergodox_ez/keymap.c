@@ -82,7 +82,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_WBAK
 ),
-};
 
 [_GAME] = LAYOUT_ergodox(  // layer 3 : gaming
     FR_MINS,           FR_AMP,      FR_EACU,       FR_QUOT, FR_APOS, FR_LPRN, KC_Y,
@@ -90,8 +89,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LSFT(KC_LGUI),     FR_Q,        KC_S,          KC_D,    KC_F,    KC_G,
     KC_LSFT,           FR_W,        KC_X,          KC_C,    KC_V,    KC_B,    KC_LCTRL,
     LT(_SYMB,FR_UGRV), FR_LESS,     TO(_BASE),     KC_LEFT, KC_RGHT, KC_LALT, KC_LGUI,
-                                                                            KC_HOME,
-                                                                            KC_SPC, KC_BSPC, KC_END,
+                                KC_HOME,
+                                KC_SPC, KC_BSPC, KC_END,
 
        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -101,6 +100,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS, KC_TRNS,
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS
+),
+};
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
